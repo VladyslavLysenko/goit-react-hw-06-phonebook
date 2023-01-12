@@ -1,12 +1,15 @@
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts } from 'components/redux/selectors';
+import { addContact } from 'components/redux/actions';
 import { InnerWrap, SectionForm, CommonButton, Input } from './Form.styled';
 
-
-export default function ContactForm({ onSubmit }) {
+export default function ContactForm() {
   const dispatch = useDispatch();
-
+  const { contacts }  = useSelector(getContacts);
   const [contactName, setContactName] = useState('name', '');
   const [number, setNumber] = useState('number', '');
+
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -28,11 +31,26 @@ export default function ContactForm({ onSubmit }) {
   const handlerSubmit = evt => {
     evt.preventDefault();
     const form = evt.currentTarget;
-
-    console.log(onSubmit);
-    const saved = onSubmit({ name: contactName, number: number });
+    const saved = saveContact({ name: contactName, number: number });
     if (saved) {
       form.reset();
+    }
+  };
+
+
+  const saveContact = contact => {
+    console.log(contact);
+    const checkName = contacts
+      .map(item => item.name.toLowerCase())
+      .some(item => item === contact.name.toLowerCase());
+
+    if (checkName) {
+      window.alert(`This contact ${contact.name} already excist `);
+      // return false;
+    } else {
+       return dispatch(addContact(contact.name, contact.number));
+
+      // return true;
     }
   };
 
@@ -75,4 +93,3 @@ export default function ContactForm({ onSubmit }) {
     </form>
   );
 }
-

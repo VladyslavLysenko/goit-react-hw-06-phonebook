@@ -1,10 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import {
-  addContact,
-  deleteContact,
-  setFilter,
-} from './actions';
 
+import { addContact, deleteContact, setFilter } from './actions';
 
 const tasksInitialStateContacts = [
   { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
@@ -13,20 +9,30 @@ const tasksInitialStateContacts = [
   { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
 ];
 
-export const ContactsReducer = createReducer(tasksInitialStateContacts, {
+export const contactsReducer = createReducer(tasksInitialStateContacts, {
   [addContact]: (state, action) => {
-    state.push(action.payload);
+    const checkName = state
+      .map(item => item.name.toLowerCase())
+      .some(item => item === action.payload.name.toLowerCase());
+
+    if (checkName) {
+      window.alert(`This contact ${action.payload.name} already excist `);
+      return false;
+    } else {
+      return [...state, action.payload];
+    }
   },
   [deleteContact]: (state, action) => {
-    const index = state.contacts.findIndex(contact => contact.id === action.payload);
+    const index = state.contacts.findIndex(
+      contact => contact.id === action.payload
+    );
     state.contacts.splice(index, 1);
-  },
- 
   },
 });
 
+
 const filtersInitialState = {
-   filter: ""
+  filter: '',
 };
 
 export const filtersReducer = createReducer(filtersInitialState, {
