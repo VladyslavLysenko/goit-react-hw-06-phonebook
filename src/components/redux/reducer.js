@@ -11,32 +11,19 @@ const tasksInitialStateContacts = [
 
 export const contactsReducer = createReducer(tasksInitialStateContacts, {
   [addContact]: (state, action) => {
-    const checkName = state
-      .map(item => item.name.toLowerCase())
-      .some(item => item === action.payload.name.toLowerCase());
-
-    if (checkName) {
-      window.alert(`This contact ${action.payload.name} already excist `);
-      return false;
-    } else {
-      return [...state, action.payload];
-    }
+    return [...state, action.payload];
   },
   [deleteContact]: (state, action) => {
-    const index = state.contacts.findIndex(
-      contact => contact.id === action.payload
-    );
-    state.contacts.splice(index, 1);
+    const index = state.findIndex(contact => contact.id === action.payload);
+    state.splice(index, 1);
   },
 });
 
-
-const filtersInitialState = {
-  filter: '',
-};
+const filtersInitialState = '';
 
 export const filtersReducer = createReducer(filtersInitialState, {
   [setFilter]: (state, action) => {
-    state.filter = action.payload;
+    state = action.payload;
+    return state;
   },
 });

@@ -1,14 +1,20 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Input, InnerWrap, SectionForm } from 'components/Form/Form.styled';
-export const Filter = ({ value, onChange }) => {
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'components/redux/actions';
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const onChange = value => {
+    dispatch(setFilter(value));
+  };
+
   return (
     <InnerWrap>
       <SectionForm>
         <label>
           Find contacts by Name
           <Input
-            value={value}
+            // value={value}
             name="filter"
             onChange={evt => onChange(evt.currentTarget.value)}
             type="text"
@@ -21,8 +27,3 @@ export const Filter = ({ value, onChange }) => {
 };
 
 export default Filter;
-
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};

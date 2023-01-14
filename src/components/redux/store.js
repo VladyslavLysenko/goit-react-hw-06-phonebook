@@ -3,7 +3,7 @@ import { contactsReducer, filtersReducer } from './reducer';
 
 export const store = configureStore({
   reducer: {
-    tasks: contactsReducer,
+    contacts: contactsReducer,
     filters: filtersReducer,
   },
 });

@@ -1,4 +1,4 @@
-import { createAction} from '@reduxjs/toolkit';
+import { createAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 export const addContact = createAction(
@@ -7,8 +7,8 @@ export const addContact = createAction(
     return {
       payload: {
         id: nanoid(),
-        name:contactName,
-        number:number,
+        name: contactName,
+        number: number,
       },
     };
   }
@@ -16,6 +16,4 @@ export const addContact = createAction(
 
 export const deleteContact = createAction('contact/deleteContact');
 
-export const setFilter = createAction('filters/setFilter', value => {
-  return { payload: value };
-});
+export const setFilter = createAction('filters/setFilter');

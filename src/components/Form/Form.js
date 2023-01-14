@@ -6,10 +6,9 @@ import { InnerWrap, SectionForm, CommonButton, Input } from './Form.styled';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  const { contacts }  = useSelector(getContacts);
+  let contacts = useSelector(getContacts);
   const [contactName, setContactName] = useState('name', '');
   const [number, setNumber] = useState('number', '');
-
 
   const handleChange = event => {
     const { name, value } = event.target;
@@ -37,20 +36,19 @@ export default function ContactForm() {
     }
   };
 
-
   const saveContact = contact => {
-    console.log(contact);
+    console.log('contacts', contacts);
     const checkName = contacts
+
       .map(item => item.name.toLowerCase())
       .some(item => item === contact.name.toLowerCase());
 
     if (checkName) {
       window.alert(`This contact ${contact.name} already excist `);
-      // return false;
+      return false;
     } else {
-       return dispatch(addContact(contact.name, contact.number));
-
-      // return true;
+      dispatch(addContact(contact.name, contact.number));
+      return true;
     }
   };
 
