@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getContacts } from 'components/redux/selectors';
+import { getContacts } from 'components/redux/contactsSlice';
 import { addContact } from 'components/redux/contactsSlice';
 import { InnerWrap, SectionForm, CommonButton, Input } from './Form.styled';
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  let contacts = useSelector(getContacts);
+  let { contacts } = useSelector(getContacts);
   const [contactName, setContactName] = useState('name', '');
   const [number, setNumber] = useState('number', '');
 
@@ -37,7 +37,6 @@ export default function ContactForm() {
   };
 
   const saveContact = contact => {
-    console.log('contacts', contacts);
     const checkName = contacts
 
       .map(item => item.name.toLowerCase())
