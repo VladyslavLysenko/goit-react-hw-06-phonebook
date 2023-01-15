@@ -6,7 +6,9 @@ import { useSelector } from 'react-redux';
 import { getContacts, getFilter } from 'components/redux/selectors';
 export const Contacts = () => {
   let contacts = useSelector(getContacts);
+
   let filter = useSelector(getFilter);
+
   if (filter) {
     contacts = contacts.filter(item =>
       item.name.toLowerCase().includes(filter.toLowerCase())
